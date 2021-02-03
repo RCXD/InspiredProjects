@@ -21,15 +21,16 @@ class Stack:
         self.name=name
         self.stackList=[]
         self.top=0
-        self.tempTop=0
+        #self.tempTop=0
         print('created peg', self.name)
 
     def push(self, data):
         #if not self.isFull():
             newNode=Node(data)
-            self.stackList.insert(self.tempTop, newNode)
+            #self.stackList.insert(self.tempTop, newNode)
+            self.stackList.insert(self.top, newNode)
             self.top += 1
-            self.tempTop += 1
+            #self.tempTop += 1
             #print('pushed '+data)
         # else:
         #     print('stack overflow')
@@ -37,15 +38,18 @@ class Stack:
     def pop(self):
         if not self.isEmpty():
             #print(self.stackList[self.tempTop-1].data)
-            result = self.stackList[self.tempTop-1]
-            self.tempTop -= 1
+            #result = self.stackList[self.tempTop-1]
+            result = self.stackList[self.top-1]
+            #self.tempTop -= 1
+            self.top -= 1
             return result.data
         else:
             #print('stack empty')
             return '-1'
 
     def isEmpty(self):
-        return self.tempTop == 0
+        #return self.tempTop == 0
+        return self.top==0
 
     # def isFull(self):
     #     return self.top==MAX_SIZE
