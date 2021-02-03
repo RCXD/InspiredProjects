@@ -10,7 +10,7 @@
     D
     E
 '''
-MAX_SIZE = 20 #unnecessary
+MAX_SIZE = 500 #Virtual limit
 
 # Attempt 01: Stack
 class Node:
@@ -18,30 +18,32 @@ class Node:
         self.data=data
 
 class Stack:
-    def __init__(self):
+    def __init__(self, name):
+        self.name=name
         self.stackList=[]
         self.top=0
         self.tempTop=0
+        print('created peg', self.name)
 
     def push(self, data):
         if not self.isFull():
             newNode=Node(data)
             self.stackList.insert(self.tempTop, newNode)
             self.top += 1
-            self.temptop += 1
-            print('pushed')
+            self.tempTop += 1
+            #print('pushed '+data)
         else:
             print('stack overflow')
 
     def pop(self):
         if not self.isEmpty():
-            print(self.stackList[self.tempTop-1].data)
+            #print(self.stackList[self.tempTop-1].data)
             result = self.stackList[self.tempTop-1]
             self.tempTop -= 1
-            return 
+            return result.data
         else:
-            print('stack empty')
-            return -1
+            #print('stack empty')
+            return '-1'
 
     def isEmpty(self):
         return self.tempTop == 0
@@ -50,23 +52,46 @@ class Stack:
         return self.top==MAX_SIZE
 
 def directMove(origin, dest):
-    push(pop())
+    #origin.Stack()
+    #dest.Stack()
+    target = origin.pop()
+    dest.push(target) #되나? 됨!
+    print('moved', str(target), 'from', origin.name, 'to', dest.name)
 
 def move(n, i, j, k):
-    self.move(n-1, i, j, k)
-    push()
+    if n==1:
+        directMove(i,k)
+    else:
+        move(n-1, i, k, j)
+        directMove(i,k)
+        move(n-1, j, i, k) 
 
 #Setting up
-ii.Stack()
-jj.Stack()
-kk.Stack()
-num=input('Insert how many disks you have')
-for i in range(1,input):
-    ii.push(char('A'+i))
+ii=Stack('i')
+jj=Stack('j')
+kk=Stack('k')
+num=int(input('Insert how many disks you have\n'))
+for i in range(0,num):
+    #ii.push(chr(ord('E')-i))
+    ii.push('-'*(num-i))
+    print('pushed '+chr(ord('E')-i)+' in peg '+ii.name)    
+
+print(ii.name, jj.name, kk.name, sep='\t')
+for i in range(len(ii.stackList)):
+    print(ii.stackList[len(ii.stackList)-i-1].data)
+
+#Solve problem
+move(num, ii, jj, kk)
+
+#Show Status
+print(ii.name, jj.name, kk.name, sep='\t')
+for i in range(num):
+    print(ii.pop(), jj.pop(), kk.pop(), sep='\t')
 
 
+# Attempt 02: Linear Linked List
 
 
-
-
-# Attempt 02: Linear Linked List(LA??)
+# Other References
+# Python recurrsion: https://lucete1230-cyberpolice.tistory.com/222
+# Python ASCII: https://www.programiz.com/python-programming/examples/ascii-character
